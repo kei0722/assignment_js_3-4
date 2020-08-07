@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JavaScript課題③-4</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+	<h2>ToDoリスト</h2>
+	<label><input type="radio" name="option" value="ALL" checked="checked">すべて</label>
+	<label><input type="radio" name="option" value="WORKINGON">作業中</label>
+	<label><input type="radio" name="option" value="DONE">完了</label>
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>コメント</th>
+				<th>状態</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+
+	<h2>新規タスクの追加</h2>
+	<label><input type="text" id="input-task"></label>
+	<button id="add-btn">追加</button>
+
+	<script src="js/main.js"></script>
+</body>
+</html>
