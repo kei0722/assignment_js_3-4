@@ -11,35 +11,43 @@ const TYPE = {
 
 let todoList = [];
 
-const createTodoWorkingOn = () => {
-	const todoWorkingon = todoList.filter( todoListfiltered => todoListfiltered.state === TYPE.DOING);
-	createTags(todoWorkingon);
-	showTodo(todoWorkingon);
-	return todoWorkingon;
+const createTodoDoing = () => {
+	const todoDoing = todoList.filter( todoListItem =>
+		todoListItem.state === TYPE.DOING
+	);
+	createTags(todoDoing);
+	showTodo(todoDoing);
+	return todoDoing;
 }
 
-const createTodoCompleted = () => {
-	const todoCompleted = todoList.filter( todoListfiltered => todoListfiltered.state === TYPE.DONE);
-	createTags(todoCompleted);
-	showTodo(todoCompleted);
-	return todoCompleted;
+const createTodoDone = () => {
+	const todoDone = todoList.filter( todoListItem =>
+		todoListItem.state === TYPE.DONE
+	);
+	createTags(todoDone);
+	showTodo(todoDone);
+	return todoDone;
 }
 
 const checkRadioButton = () => {
-	createTodoWorkingOn();
-	createTodoCompleted();
+	createTodoDoing();
+	createTodoDone();
 
 	for (let i = 0; i < options.length; i++) {
 		if (options[i].checked) {
-			if (options[i].value === 'ALL') {
-				createTags(todoList);
-				showTodo(todoList);
-			} else if (options[i].value === 'WORKINGON') {
-				createTags(createTodoWorkingOn());
-				showTodo(createTodoWorkingOn());
-			} else if (options[i].value === 'COMPLETED') {
-				createTags(createTodoCompleted());
-				showTodo(createTodoCompleted());
+			switch (options[i].value) {
+				case 'ALL':
+					createTags(todoList);
+					showTodo(todoList);
+					break;
+				case 'DOING':
+					createTags(createTodoDoing());
+					showTodo(createTodoDoing());
+					break;
+				case 'DONE':
+					createTags(createTodoDone());
+					showTodo(createTodoDone());
+					break;
 			}
 		}
 	}
@@ -55,7 +63,7 @@ const createTags = tags => {
 		const createTr = document.createElement('tr');
 		tbody.appendChild(createTr);
 
-		document.querySelectorAll('th').forEach( function() {
+		document.querySelectorAll('th').forEach( () => {
 			createTr.appendChild(document.createElement('td'));
 		});
 	}
@@ -80,9 +88,9 @@ const showTodo = list => {
 		stateButton.textContent = list[i].state;
 
 		if (list[i].state === TYPE.DOING) {
-			stateButton.className = 'state-button workingon-button';
+			stateButton.className = 'state-button doing-button';
 		} else {
-			stateButton.className = 'state-button completed-button';
+			stateButton.className = 'state-button done-button';
 		}
 
 		const deleteButton = tbody.children[i].children[3].appendChild(document.createElement('button'));
@@ -94,16 +102,16 @@ const showTodo = list => {
 	for (let i = 0; i < getStateButton.length; i++) {
 		getStateButton[i].addEventListener('click', () => {
 
-			if (getStateButton[i].classList.contains('workingon-button')) {
-				getStateButton[i].classList.remove('workingon-button');
-				getStateButton[i].classList.add('completed-button');
+			if (getStateButton[i].classList.contains('doing-button')) {
+				getStateButton[i].classList.remove('doing-button');
+				getStateButton[i].classList.add('done-button');
 				list[i].state = TYPE.DONE;
 				getStateButton[i].textContent = list[i].state;
 				checkRadioButton();
 
 			} else {
-				getStateButton[i].classList.remove('completed-button');
-				getStateButton[i].classList.add('workingon-button');
+				getStateButton[i].classList.remove('done-button');
+				getStateButton[i].classList.add('doing-button');
 				list[i].state = TYPE.DOING;
 				getStateButton[i].textContent = list[i].state;
 				checkRadioButton();
@@ -116,7 +124,7 @@ const showTodo = list => {
 		getDeleteButton[i].addEventListener('click', () => {
 			todoList.splice(list[i].id, 1);
 
-			todoList.forEach( function(vale, index) {
+			todoList.forEach( (value, index) => {
 				todoList[index].id = index;
 			});
 
